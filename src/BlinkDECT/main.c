@@ -4,7 +4,6 @@
 #include <unistd.h>
 #include "serialPort.h"
 #include "hdlc.h"
-#include "SC14CVMDECT.h"
 
 serialPort_init_t SC14CVMDECT;
 serialPort_rxCallback_t rxcallback;
@@ -37,35 +36,36 @@ int ReadOnce(uint8_t *buffer, uint16_t buffersize){
     }
 }
 
-hdlc_sendSerialFct_t SendSerial(uint8_t *data, uint16_t length){
-    hdlc_sendSerialFct_t sendSerialFct;
+uint8_t SendSerial(uint8_t *data, uint16_t length){
+    //hdlc_sendSerialFct_t sendSerialFct;
     if(serialPort_writeBlocking(data, length) < 0){
         printf("write failed~");
+        return -1;
     }
     else{
         printf("%.02X ", data);
         printf("%i\n", length);
     }
-    return sendSerialFct;
+    return 0;
 }
 
-hdlc_allocateMemoryFct_t memalloc(uint8_t **data, uint16_t length){
-    hdlc_allocateMemoryFct_t allocateMemoryFct;
+uint8_t memalloc(uint8_t **data, uint16_t length){
+    //hdlc_allocateMemoryFct_t allocateMemoryFct;
     *data = (uint8_t *)malloc(length * sizeof(uint8_t));
-    return allocateMemoryFct;
+    return 0;
 }
 
-hdlc_freeMemoryFct_t freeMemory(uint8_t *data){
-    hdlc_freeMemoryFct_t freeMemoryFct;
+uint8_t freeMemory(uint8_t *data){
+    //hdlc_freeMemoryFct_t freeMemoryFct;
     free(data);
-    return freeMemoryFct;
+    return 0;
 }
 
-hdlc_freeMemoryFct_t parsedPacket(uint8_t *data, uint16_t length) {
-    hdlc_freeMemoryFct_t parsedPacketFct;
+uint8_t parsedPacket(uint8_t *data, uint16_t length) {
+    //hdlc_freeMemoryFct_t parsedPacketFct;
     // Handle the parsed HDLC packet
     printf("parsed packet function called");
-    return parsedPacketFct;
+    return 0;
 }
 
 int main() {
